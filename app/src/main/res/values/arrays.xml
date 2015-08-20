@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="icon_name">
+        <item>商品掃描</item>
+        <item>最新優惠</item>
+        <item>商品介紹</item>
+        <item>衛教資訊</item>
+        <item>會員掃描</item>
+    </string-array>
+</resources>
