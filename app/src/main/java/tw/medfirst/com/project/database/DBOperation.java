@@ -34,6 +34,7 @@ public class DBOperation {
     private static TopMenuDao topMenuDao;
     private static SubMenuDao subMenuDao;
     private static ProductMenuDao productMenuDao;
+    private static GudanceDao gudanceDao;
 
     private DBOperation(Context context){
         mContext = context;
@@ -46,6 +47,8 @@ public class DBOperation {
             productDao = new ProductDao(context);
             topMenuDao = new TopMenuDao(context);
             subMenuDao = new SubMenuDao(context);
+            gudanceDao = new GudanceDao(context);
+
             productMenuDao = new ProductMenuDao(context);
         }
         //
@@ -64,9 +67,10 @@ public class DBOperation {
 
     private void processingTop(List<Object> tops, Handler handler) {
         List<TopMenuEntity> datas = topMenuDao.getAll();
+        List<DownloadEntity> downloadList = new ArrayList<DownloadEntity>();   //下載清單
         if(tops == null)
             return;
-//        tops.remove(1);
+
         for(Object top : tops){
             String topText = ((LinkedTreeMap<String, Object>) top).get("menu").toString();
             double sort = (double) ((LinkedTreeMap<String, Object>) top).get("sort");
@@ -95,7 +99,7 @@ public class DBOperation {
                 newData.setCheck(true);
                 datas.add(newData);
             }
-            processingSub(subs, id);
+            processingSub(subs, id, downloadList);
         }
         //delete data if not checked
         for (TopMenuEntity data : datas)
@@ -104,10 +108,10 @@ public class DBOperation {
                 subMenuDao.deleteByTopId(data.getId());
                 productMenuDao.deleteByTopId(data.getId());
             }
-        Application.sendMessage(handler, MessageManager.PRODUCT_MENU_ADDING_ACCESS, 0, 0, null);
+        Application.sendMessage(handler, MessageManager.PRODUCT_MENU_ADDING_ACCESS, 0, 0, downloadList);
     }
 
-    private void processingSub(List<Object> subs, final long id) {
+    private void processingSub(List<Object> subs, final long id, List<DownloadEntity> downloadList) {
         List<SubMenuEntity> datas = subMenuDao.getByTopId(id);
         if(subs == null)
             return;
@@ -141,7 +145,7 @@ public class DBOperation {
                 newData.setCheck(true);
                 datas.add(newData);
             }
-            processingProduct(productMenus, id, subId);
+            processingProduct(productMenus, id, subId, downloadList);
         }
         for (SubMenuEntity data : datas) {
             if (!data.getCheck()) {
@@ -153,7 +157,7 @@ public class DBOperation {
 
     }
 
-    private void processingProduct(List<Object> products, final long topId, final long subId) {
+    private void processingProduct(List<Object> products, final long topId, final long subId, List<DownloadEntity> downloadList) {
         List<ProductMenuEntity> datas = productMenuDao.getByTopSubId(topId, subId);
         if(products == null)
             return;
@@ -167,7 +171,7 @@ public class DBOperation {
             String id2 = (String) ((LinkedTreeMap<String, Object>) product).get("id");
             long beginDate = Application.ObjToTimestamp(((LinkedTreeMap<String, Object>) product).get("beginDate"));
             long endDate = Application.ObjToTimestamp(((LinkedTreeMap<String, Object>) product).get("endDate"));
-            ProductMenuEntity newData = new ProductMenuEntity(topId, subId, pId, subPicPath, (int)sort, id2,                                    beginDate, endDate);
+            ProductMenuEntity newData = new ProductMenuEntity(topId, subId, pId, subPicPath, (int)sort, id2, beginDate, endDate);
             boolean isUpdate = false;
             for (ProductMenuEntity data : datas) {
                 if (data.getId2().equals(id2)) {
@@ -184,11 +188,14 @@ public class DBOperation {
                 newData.setCheck(true);
                 datas.add(newData);
             }
+            downloadList.add(new DownloadEntity("p", subPicPath, newData.getPicName()));
         }
 
         for (ProductMenuEntity data : datas) {
-            if (!data.getCheck())
+            if (!data.getCheck()) {
+                Application.deleteFile2(data.getPicName(), "p");
                 productMenuDao.delete(data.getId());
+            }
         }
 //        productMenuDao.printAllData();
     }
@@ -225,8 +232,6 @@ public class DBOperation {
             }
 
             if(!isUpdate){
-//                p2.setCheck(true);
-//                p2.setId(productDao.insert(p2).getId());
                 long id = productDao.insert(p2).getId();
                 ProductDao.LittleEnitity b = productDao.new LittleEnitity(id, p2.getPath());
                 b.setCheck(true);
@@ -239,18 +244,10 @@ public class DBOperation {
 
         for(ProductDao.LittleEnitity d : data){
             if(!d.getCheck()) {
-                String path = null;
                 ProductEntity p = productDao.get(d.getId());
                 if(p == null)
                     return;
-                if(p.getType().equals("v"))
-                    path = Application.videoPath + p.getName();
-                else if(p.getType().equals("p"))
-                    path = Application.imagePath + p.getName();
-                if(path != null) {
-                    Logger.e(TAG, path);
-                    Application.deleteFile2(path);
-                }
+                Application.deleteFile2(p.getName(), p.getType());
                 productDao.delete(d.getId());
 
             }
@@ -258,11 +255,8 @@ public class DBOperation {
         }
 
         //send message back to activity
-        Message msg = new Message();
-        msg.what = MessageManager.PRODUCT_INFO_ADDING_ACCESS;
-        msg.obj = downloadList;
-        handler.sendMessage(msg);
 
+        Application.sendMessage(handler, MessageManager.PRODUCT_INFO_ADDING_ACCESS, 0, 0, downloadList);
 //        productDao.printAllData();
 
     }
@@ -291,10 +285,41 @@ public class DBOperation {
         return entities;
     }
 
-    public void setGudanceInfo2DB(List<Object> gudanceDatas, Handler mHandler){
+    public void setGudanceInfo2DB(List<Object> gudanceDatas, Handler handler){
         List<GudanceEntity> gudanceList =  decomposeGudanceJson(gudanceDatas);
+        List<DownloadEntity> downloadList = new ArrayList<DownloadEntity>();   //下載清單
         if(gudanceList == null)
             return;
+//        gudanceList.remove(0);
+
+        List<GudanceEntity> dbDatas = gudanceDao.getAll();
+        for(GudanceEntity data : gudanceList){
+            String name = data.getFileName();
+            boolean isUpdate = false;
+
+            for(GudanceEntity dbData : dbDatas){
+                if(dbData.getFileName().equals(name)){
+                    data.setId(dbData.getId());
+                    gudanceDao.update(data);
+                    dbData.setCheck(true);
+                    isUpdate = true;
+                }
+            }
+            if(!isUpdate){
+                data = gudanceDao.insert(data);
+                data.setCheck(true);
+                dbDatas.add(data);
+            }
+            DownloadEntity d = new DownloadEntity("v", data.getUrl(), data.getFileName());
+            downloadList.add(d);
+        }
+        for(GudanceEntity dbData : dbDatas){
+            if(!dbData.getCheck()) {
+                Application.deleteFile2(dbData.getFileName(), "v");
+                gudanceDao.delete(dbData.getId());
+            }
+        }
+        Application.sendMessage(handler, MessageManager.GUDANCE_INFO_ADDING_ACCESS, 0, 0, downloadList);
 
 
     }

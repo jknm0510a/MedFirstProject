@@ -16,6 +16,7 @@ public class GudanceEntity {
     private String url;
     private int sort;
     private String fileName;
+    private boolean check = false;
 
     public GudanceEntity(String bd, String ed, String bt, String et, String u, int s){
         this.beginDate = bd;
@@ -31,12 +32,20 @@ public class GudanceEntity {
 
     }
 
+    public String toString(){
+        return "beginDate: " + beginDate + ", " + "endDate: " + endDate + ", " + "beginTime: " + beginTime + ", " +
+                "endTime: " + endTime + ", " + "url: " + url + ", " + "sort: " + sort + ", " +
+                "fileName: " + fileName;
+
+    }
+
     private String parseName() {
         if(url == null)
             return null;
         String str[] = url.split("/");
         return str[str.length - 1];
     }
+
     public long getId(){return id;}
     public String getBeginDate(){return beginDate;}
     public String getEndDate(){return endDate;}
@@ -45,6 +54,9 @@ public class GudanceEntity {
     public String getUrl(){return url;}
     public int getSort(){return sort;}
     public String getFileName(){return fileName;}
+    public boolean getCheck(){
+        return check;
+    }
 
     public void setBeginDate(String beginDate){this.beginDate = beginDate;}
     public void setEndDate(String endDate){this.endDate = endDate;}
@@ -53,6 +65,10 @@ public class GudanceEntity {
     public void setUrl(String url){this.url = url;}
     public void setSort(int sort){this.sort = sort;}
     public void setId(long id){this.id = id;}
+    public void setCheck(boolean b){
+        this.check = b;
+    }
+    public void setFileName(String name){this.fileName = name;}
 
 
 

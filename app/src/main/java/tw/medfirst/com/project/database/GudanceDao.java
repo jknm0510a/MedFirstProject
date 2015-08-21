@@ -33,6 +33,7 @@ public class GudanceDao {
     public static final String END_TIME_COLUMN = "EndTime";
     public static final String MEDIA_URL_COLUMN = "mediaUrl";
     public static final String SORT_COLUMN = "Sort";
+    public static final String MEDIA_NAME = "mediaName";
 
 
 
@@ -53,7 +54,8 @@ public class GudanceDao {
                     BEGIN_TIME_COLUMN + " STRING, " +
                     END_TIME_COLUMN + " STRING, " +
                     MEDIA_URL_COLUMN + " STRING, " +
-                    SORT_COLUMN + " INTEGER NOT NULL)";
+                    SORT_COLUMN + " INTEGER NOT NULL, "+
+                    MEDIA_NAME + " STRING)";
 
     // 資料庫物件
     private SQLiteDatabase db;
@@ -81,6 +83,7 @@ public class GudanceDao {
         cv.put(END_TIME_COLUMN, item.getEndTime());
         cv.put(MEDIA_URL_COLUMN, item.getUrl());
         cv.put(SORT_COLUMN, item.getSort());
+        cv.put(MEDIA_NAME, item.getFileName());
 
         // 新增一筆資料並取得編號
         // 第一個參數是表格名稱
@@ -107,6 +110,7 @@ public class GudanceDao {
         cv.put(END_TIME_COLUMN, item.getEndTime());
         cv.put(MEDIA_URL_COLUMN, item.getUrl());
         cv.put(SORT_COLUMN, item.getSort());
+        cv.put(MEDIA_NAME, item.getFileName());
         // 設定修改資料的條件為編號
         // 格式為「欄位名稱＝資料」
         String where = KEY_ID + "=" + item.getId();
@@ -186,6 +190,7 @@ public class GudanceDao {
         result.setEndTime(cursor.getString(4));
         result.setUrl(cursor.getString(5));
         result.setSort(cursor.getInt(6));
+        result.setFileName(cursor.getString(7));
         // 回傳結果
         return result;
     }

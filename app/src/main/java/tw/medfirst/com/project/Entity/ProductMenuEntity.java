@@ -1,5 +1,7 @@
 package tw.medfirst.com.project.Entity;
 
+import tw.medfirst.com.project.baseunit.Logger;
+
 /**
  * Created by KCTsai on 2015/6/26.
  */
@@ -15,6 +17,7 @@ public class ProductMenuEntity {
     protected long endDate;
     protected int sort;
     protected boolean check = false;
+    private String PicName = null;
 
     /*
     * get funcation
@@ -66,15 +69,13 @@ public class ProductMenuEntity {
     public String getSubPicPath(){
         return subPicPath;
     }
-//    public long getTime(){
-//        return time;
-//    }
     public int getSort(){
         return sort;
     }
     public boolean getCheck(){
         return check;
     }
+    public String getPicName(){return PicName;}
     /*
     * set function
     * */
@@ -110,5 +111,16 @@ public class ProductMenuEntity {
     }
     public void setEndDate(long endDate){
         this.endDate = endDate;
+    }
+
+    public void setPicName(String name) {
+        this.PicName = name;
+    }
+
+    private String parserName() {
+        if(subPicPath == null)
+            return null;
+        String str[] = subPicPath.split("/");
+        return str[str.length - 1];
     }
 }

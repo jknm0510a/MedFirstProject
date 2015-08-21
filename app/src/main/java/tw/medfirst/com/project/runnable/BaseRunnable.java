@@ -64,120 +64,24 @@ public abstract class BaseRunnable implements Runnable{
             HttpTransportSE androidHttpTransport = new HttpTransportSE(HttpManager.API_URL);
             androidHttpTransport.call(action, envelope);
             Object result = envelope.getResponse();
-            Log.e("json result: ", result.toString());
+//            Log.e("json result: ", result.toString());
             if(result != null){
                 Gson gson = new Gson();
                 HashMap<String, Object> resultData = gson.fromJson(result.toString(), HashMap.class);
 //                Log.e("json result: ", resultData.toString());
                 Result(resultData);
             }
-//            if(result != null){
-//                HashMap<String, Object> resultData = (HashMap<String, Object>) DataInfoJson.getInstance().toObject(result.toString(), HashMap.class);
-//                Result(resultData);
-//            }else{
-//                Result(null);
-//            }
-
-
         }
         catch (IOException e){
-//            soapMessage.setText(e.toString());
             Log.e("IOException", e.toString());
         }
         catch (XmlPullParserException e){
-//            soapMessage.setText(e.toString());
             Log.e("XmlPullParserException", e.toString());
         }
 
 
     }
 
-//    public static class DataInfoJson  {
-//        private static DataInfoJson cInstance;
-//        //
-//        private ObjectMapper cJsonObjecMapper = new ObjectMapper();
-//
-//        public DataInfoJson() {
-//            // SerializationFeature for changing how JSON is written
-//
-//            // to enable standard indentation ("pretty-printing"):
-//            //cJsonObjecMapper.enable(SerializationFeature.INDENT_OUTPUT);
-//            // to allow serialization of "empty" POJOs (no properties to serialize)
-//            // (without this setting, an exception is thrown in those cases)
-//            cJsonObjecMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-//            // to write java.util.Date, Calendar as number (timestamp):
-//            cJsonObjecMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-//
-//            // DeserializationFeature for changing how JSON is read as POJOs:
-//
-//            // to prevent exception when encountering unknown property:
-//            cJsonObjecMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-//            // to allow coercion of JSON empty String ("") to null Object value:
-//            cJsonObjecMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-//
-//            //
-//            cInstance = this;
-//        }
-//
-//        //
-//        public static DataInfoJson getInstance() {
-//            if (cInstance == null)
-//                cInstance = new DataInfoJson();
-//            //
-//            return cInstance;
-//        }
-//
-//        public String toJsonString(Object obj) {
-//            String rc = this.toString();
-//            //
-//            try {
-//                rc = cJsonObjecMapper.writeValueAsString(obj);
-//                //?rc = cJsonObjecMapper.convertValue(obj, String.class);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            //
-//            return rc;
-//        }
-//
-//        public byte[] toJsonByteArray(Object obj) {
-//            byte[] rc = null;
-//            //
-//            try {
-//                rc = cJsonObjecMapper.writeValueAsBytes(obj);
-//                //? rc = cJsonObjecMapper.convertValue(obj, byte[].class);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            //
-//            return rc;
-//        }
-//
-//        public Object toObject(String jsonString,  Object obj) {
-//            Object rc = null;
-//            //
-//            try {
-//                rc = cJsonObjecMapper.readValue(jsonString, Object.class);
-//                //rc = cJsonObjecMapper.readValue(jsonString,  new TypeReference<Map<String, Object>>() {});
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            //
-//            return rc;
-//        }
-//
-//        public Object toObject(byte[] jsonByteArray, Object obj) {
-//            Object rc = null;
-//            //
-//            try {
-//                rc = cJsonObjecMapper.readValue(jsonByteArray,  Object.class);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            //
-//            return rc;
-//        }
-//    }
 
 
 

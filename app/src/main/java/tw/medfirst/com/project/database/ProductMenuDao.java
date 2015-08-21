@@ -43,6 +43,7 @@ public class ProductMenuDao {
     public static final String BEGIN_DATE_COLUMN = "BeginDate";
     public static final String END_DATE_COLUMN = "EndDate";
     public static final String SORT_COLUMN = "Sort";
+    private static final String SUB_PIC_NAME = "subPicName";
 
 
 
@@ -66,7 +67,8 @@ public class ProductMenuDao {
                     END_DATE_COLUMN + " INTEGER, " +
                     SUB_PIC_PATH_COLUMN + " TEXT NOT NULL, " +
 //                    TIME_COLUMN + " INTEGER NOT NULL, " +
-                    SORT_COLUMN + " INTEGER NOT NULL)";
+                    SORT_COLUMN + " INTEGER NOT NULL, " +
+                    SUB_PIC_NAME + " STRING)";
 
     // 資料庫物件
     private SQLiteDatabase db;
@@ -97,6 +99,7 @@ public class ProductMenuDao {
         cv.put(SUB_PIC_PATH_COLUMN, item.getSubPicPath());
 //        cv.put(TIME_COLUMN, item.getTime());
         cv.put(SORT_COLUMN, item.getSort());
+        cv.put(SUB_PIC_NAME, item.getPicName());
 
 
         // 新增一筆資料並取得編號
@@ -125,8 +128,8 @@ public class ProductMenuDao {
         cv.put(BEGIN_DATE_COLUMN, item.getBeginDate());
         cv.put(END_DATE_COLUMN, item.getEndDate());
         cv.put(SUB_PIC_PATH_COLUMN, item.getSubPicPath());
-//        cv.put(TIME_COLUMN, item.getTime());
         cv.put(SORT_COLUMN, item.getSort());
+        cv.put(SUB_PIC_NAME, item.getPicName());
         // 設定修改資料的條件為編號
         // 格式為「欄位名稱＝資料」
         String where = KEY_ID + "=" + item.getId();
@@ -260,6 +263,7 @@ public class ProductMenuDao {
         result.setSubPicPath(cursor.getString(7));
 //        result.setTime(cursor.getLong(5));
         result.setSort(cursor.getInt(8));
+        result.setPicName(cursor.getString(9));
         // 回傳結果
         return result;
     }

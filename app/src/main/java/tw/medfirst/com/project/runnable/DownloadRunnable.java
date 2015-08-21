@@ -31,16 +31,14 @@ public class DownloadRunnable implements Runnable{
     private void init() {
         if(downloadEntity == null)
             return;
-        if(downloadEntity.getType().equals("v"))
-            savePath = Application.videoPath + downloadEntity.getName();
-        else if(downloadEntity.getType().equals("p"))
-            savePath = Application.imagePath + downloadEntity.getName();
+        savePath = Application.getPath(downloadEntity.getName(), downloadEntity.getType());
     }
 
 
     @Override
     public void run() {
-        if(downloadEntity == null || savePath == null)
+        if(downloadEntity == null || savePath == null || downloadEntity.getPath() == null
+                || downloadEntity.getPath().equals(""))
             return;
         if(Application.checkIsFileExist(savePath)) {
             Logger.e("DownloadRunnable", downloadEntity.getName() + " is exist");
@@ -90,7 +88,9 @@ public class DownloadRunnable implements Runnable{
 
 
     private void retryDownload() {
-        Application.deleteFile2(savePath);
+        if(downloadEntity == null)
+            return;
+        Application.deleteFile2(downloadEntity.getName(), downloadEntity.getType());
         if(downloadEntity.getTryCount() < 3){
             downloadEntity.setTryCount(downloadEntity.getTryCount() + 1);
             run();

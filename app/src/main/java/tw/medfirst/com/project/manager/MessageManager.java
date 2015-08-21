@@ -13,4 +13,5 @@ public class MessageManager {
 
     public static final int PRODUCT_MENU_ADDING_ACCESS = 201;
     public static final int PRODUCT_INFO_ADDING_ACCESS = 202;
+    public static final int GUDANCE_INFO_ADDING_ACCESS = 203;
 }

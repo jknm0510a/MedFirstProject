@@ -14,6 +14,11 @@ public class DownloadEntity {
         this.name = name;
     }
 
+    @Override
+    public String toString(){
+        return "type: " + type + ", " + "path: " + path + ", " + "name: " + name;
+    }
+
     public String getType(){return type;}
     public String getPath(){return path;}
     public String getName(){return name;}

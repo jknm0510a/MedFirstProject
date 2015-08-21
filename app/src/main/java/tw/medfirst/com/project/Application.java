@@ -88,7 +88,22 @@ public class Application extends MultiDexApplication {
             return false;
     }
 
-    public static boolean deleteFile2(final String path){
+    public static String getPath(String name, String type){
+        String path = null;
+        if(name == null)
+            return null;
+        if(type.equals("v"))
+            path = videoPath + name;
+        else if(type.equals("p"))
+            path = imagePath + name;
+        return path;
+    }
+
+    public static boolean deleteFile2(String name, String type){
+        String path = getPath(name, type);
+
+        if(path == null)
+            return false;
         File file = new File(path);
         return file.delete();
     }

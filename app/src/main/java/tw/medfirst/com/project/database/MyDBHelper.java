@@ -9,11 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MyDBHelper extends SQLiteOpenHelper {
 
-    // ��Ʈw�W��
+
     public static final String DATABASE_NAME = "mydata.db";
-    // ��Ʈw�����A��Ƶ��c���ܪ��ɭԭn���o�ӼƦr�A�q�`�O�[�@
+
     public static final int VERSION = 1;
-    // ��Ʈw����A�T�w������ܼ�
+
     private static SQLiteDatabase database;
 
 
@@ -22,7 +22,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
-    // �ݭn��Ʈw������I�s�o�Ӥ�k�A�o�Ӥ�k�b�@�몺���γ����ݭn�ק�
+
     public static SQLiteDatabase getDatabase(Context context) {
 //        Log.e("onCreate2", "onCreate2");
         if (database == null || !database.isOpen()) {
@@ -41,6 +41,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL(TopMenuDao.CREATE_TABLE);
         db.execSQL(SubMenuDao.CREATE_TABLE);
         db.execSQL(ProductMenuDao.CREATE_TABLE);
+        db.execSQL(GudanceDao.CREATE_TABLE);
     }
 
 
@@ -51,6 +52,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TopMenuDao.CREATE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SubMenuDao.CREATE_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ProductMenuDao.CREATE_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + GudanceDao.CREATE_TABLE);
         onCreate(db);
     }
 }
