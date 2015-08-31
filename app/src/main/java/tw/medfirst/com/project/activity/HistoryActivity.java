@@ -1,4 +1,4 @@
-package tw.medfirst.com.project;
+package tw.medfirst.com.project.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import tw.medfirst.com.project.R;
 import tw.medfirst.com.project.adapter.HistoryAdapter;
 import tw.medfirst.com.project.baseview.BaseActivity;
 import tw.medfirst.com.project.baseview.HistoryWall;

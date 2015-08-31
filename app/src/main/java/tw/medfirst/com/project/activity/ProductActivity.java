@@ -1,4 +1,4 @@
-package tw.medfirst.com.project;
+package tw.medfirst.com.project.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tw.medfirst.com.project.Entity.ProductEntity;
+import tw.medfirst.com.project.R;
 import tw.medfirst.com.project.adapter.ViewPagerAdapter;
 import tw.medfirst.com.project.baseunit.Logger;
 import tw.medfirst.com.project.baseview.BaseActivity;

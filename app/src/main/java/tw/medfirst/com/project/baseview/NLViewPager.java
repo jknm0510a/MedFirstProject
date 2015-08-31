@@ -1,15 +1,13 @@
 package tw.medfirst.com.project.baseview;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.lang.reflect.Field;
 
-import tw.medfirst.com.project.ProductActivity;
+import tw.medfirst.com.project.activity.ProductActivity;
 import tw.medfirst.com.project.adapter.ViewPagerAdapter;
 import tw.medfirst.com.project.baseunit.FixedSpeedScroller;
 import tw.medfirst.com.project.baseunit.Logger;

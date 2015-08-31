@@ -1,23 +1,17 @@
-package tw.medfirst.com.project;
+package tw.medfirst.com.project.activity;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-
-import com.google.android.exoplayer.VideoSurfaceView;
-import com.google.android.exoplayer.audio.AudioCapabilities;
-import com.google.android.exoplayer.audio.AudioCapabilitiesReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import tw.medfirst.com.project.baseunit.Logger;
+import tw.medfirst.com.project.Application;
+import tw.medfirst.com.project.R;
+import tw.medfirst.com.project.activity.MainActivity;
 import tw.medfirst.com.project.baseview.BaseActivity;
-import tw.medfirst.com.project.baseview.ExoPlayerView;
-import tw.medfirst.com.project.exoplayer.DemoPlayer;
+import tw.medfirst.com.project.baseview.ExoPlayerLayout;
 import tw.medfirst.com.project.manager.MessageManager;
 
 /**
@@ -25,7 +19,7 @@ import tw.medfirst.com.project.manager.MessageManager;
  */
 public class GuidanceActivity extends BaseActivity{
     private static final String TAG = "GuidanceActivity";
-    private ExoPlayerView surfaceView;
+    private ExoPlayerLayout exoPlayerLayout;
     private List<String> videoList;
 
 
@@ -51,14 +45,15 @@ public class GuidanceActivity extends BaseActivity{
     protected void processLoading() {
         videoList.add(Application.VEDIO_PATH + "/635724721531434309.mp4");
         videoList.add(Application.VEDIO_PATH + "/635726599845794411.mp4");
-        surfaceView.addPlayList(videoList);
-        if(surfaceView != null)
-            surfaceView.preparePlayer();
+        if(exoPlayerLayout != null) {
+            exoPlayerLayout.initView(videoList, true);
+            exoPlayerLayout.preparePlayer(0);
+        }
     }
 
     @Override
     protected void init() {
-        surfaceView = (ExoPlayerView) findViewById(R.id.surface_view);
+        exoPlayerLayout = (ExoPlayerLayout) findViewById(R.id.exoplayer_root_layout);
         videoList = new ArrayList<String>();
 
 
@@ -71,7 +66,7 @@ public class GuidanceActivity extends BaseActivity{
 
     @Override
     protected void onPause() {
-        surfaceView.releasePlayer(true);
+        exoPlayerLayout.releasePlayer();
         super.onPause();
     }
 

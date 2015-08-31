@@ -16,6 +16,8 @@ import com.google.android.exoplayer.audio.AudioCapabilitiesReceiver;
 import com.google.android.exoplayer.extractor.mp4.Mp4Extractor;
 import com.google.android.exoplayer.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import tw.medfirst.com.project.R;
@@ -32,11 +34,15 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
     protected Context mContext;
     private VideoSurfaceView surfaceView;
     private DemoPlayer player;
+    private List<String> playList;
     private Uri contentUri;
     private boolean playerNeedsPrepare;
-    private String path = null;
+//    private String path = null;
     protected Button playBtn;
     public long pauseTime = 0;
+
+    private int playIndex = 0;
+    private boolean isRecycle;
 
     public ExoPlayerLayout(Context context) {
         super(context);
@@ -56,17 +62,21 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
 //        initView();
     }
 
-    public void initView(final String path) {
+    public void initSingleSourceView(String path, boolean b) {
+        List<String> l = new ArrayList<>(1);
+        l.add(path);
+        initView(l, b);
+    }
+
+    public void initView(final List<String> playList, final boolean isRecycle) {
         LayoutParams l = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
         this.setLayoutParams(l);
         surfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
-        
         surfaceView.getHolder().addCallback(this);
-//        surfaceView.setBackgroundColor(Color.TRANSPARENT);
-//        surfaceView.setZOrderOnTop(true);
-//        surfaceView.getHolder().setFormat(VideoSurfaceView.TRANSPARENT);
-//        preparePlayer("");
-        this.path = path;
+
+        this.playList = playList;
+        this.isRecycle = isRecycle;
+
         playBtn = (Button) findViewById(R.id.play_btn);
         playBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -79,9 +89,11 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
 
     public void preparePlayer(long seekTime) {
         String userAgent = Util.getUserAgent(mContext, "ExoPlayerDemo");
+//        this.playIndex = playIndex;
+        if(playList == null || playIndex < 0 || playIndex >= playList.size() || playList.get(playIndex) == null)
+            return;
 
-//        path = Environment.getExternalStorageDirectory().getPath()+ "/test/04.mp4";
-        contentUri = Uri.parse(path);
+        contentUri = Uri.parse(playList.get(playIndex));
         if(player == null){
             player = new DemoPlayer(new ExtractorRendererBuilder(mContext, userAgent, contentUri, null,
                     new Mp4Extractor()));
@@ -128,6 +140,10 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
         }
     }
 
+    public void setPlayIndex(int playIndex) {
+        this.playIndex = playIndex;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
@@ -156,8 +172,24 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
     @Override
     public void onStateChanged(boolean playWhenReady, int playbackState) {
         if(playbackState == ExoPlayer.STATE_ENDED){
-            playBtn.setVisibility(View.VISIBLE);
-            releasePlayer();
+            playIndex++;
+
+            if(playIndex < 0 || playIndex >= playList.size()){
+                if(isRecycle) {
+                    playIndex = playIndex % playList.size();
+                    releasePlayer();
+                    preparePlayer(0);
+                }
+                else{
+                    playBtn.setVisibility(View.VISIBLE);
+                    releasePlayer();
+                    playIndex = 0;
+                }
+            }else{
+                releasePlayer();
+                preparePlayer(0);
+            }
+
         }
     }
 
@@ -175,6 +207,7 @@ public class ExoPlayerLayout extends RelativeLayout implements SurfaceHolder.Cal
     public void onText(String text) {
 
     }
+
 
 
 }

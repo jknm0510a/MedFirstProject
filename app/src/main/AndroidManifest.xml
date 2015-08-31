@@ -30,17 +30,13 @@
         </receiver>
         <service android:name=".gcm.GcmIntentService" />
         <activity
-            android:name="tw.medfirst.com.project.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
 
         </activity>
         <activity
-            android:name="tw.medfirst.com.project.GuidanceActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name="tw.medfirst.com.project.LoadingActivity"
+            android:name=".activity.GuidanceActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -50,12 +46,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tw.medfirst.com.project.HistoryActivity"
+            android:name=".activity.LoadingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+
+        </activity>
+        <activity
+            android:name=".activity.HistoryActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="tw.medfirst.com.project.ProductActivity"
+            android:name=".activity.ProductActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
 

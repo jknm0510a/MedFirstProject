@@ -46,7 +46,8 @@ public class ViewPagerAdapter extends PagerAdapter {
             switch (p.getType()){
                 case "v":
                     ExoPlayerLayout exoPlayerLayout = (ExoPlayerLayout) mInflater.inflate(R.layout.exoplayer_viewpager_item, null);
-                    exoPlayerLayout.initView(path);
+
+                    exoPlayerLayout.initSingleSourceView(path, false);
                     viewList.add(exoPlayerLayout);
                     break;
                 case "p":

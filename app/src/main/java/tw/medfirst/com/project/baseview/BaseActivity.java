@@ -5,16 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
-import java.util.Objects;
-
-import tw.medfirst.com.project.GuidanceActivity;
+import tw.medfirst.com.project.activity.GuidanceActivity;
 import tw.medfirst.com.project.baseunit.Logger;
-import tw.medfirst.com.project.gcm.GcmBroadcastReceiver;
-import tw.medfirst.com.project.gcm.GcmRegistrationAsyncTask;
 import tw.medfirst.com.project.manager.MessageManager;
 
 /**

@@ -1,38 +1,22 @@
-package tw.medfirst.com.project;
+package tw.medfirst.com.project.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import tw.medfirst.com.project.Entity.DownloadEntity;
-import tw.medfirst.com.project.Entity.GudanceEntity;
-import tw.medfirst.com.project.Entity.ProductMenuEntity;
-import tw.medfirst.com.project.baseunit.Logger;
+import tw.medfirst.com.project.R;
+import tw.medfirst.com.project.activity.MainActivity;
 import tw.medfirst.com.project.baseview.BaseActivity;
 import tw.medfirst.com.project.database.DBOperation;
 import tw.medfirst.com.project.database.ProductMenuDao;
 import tw.medfirst.com.project.manager.HttpManager;
 import tw.medfirst.com.project.manager.MessageManager;
-import tw.medfirst.com.project.manager.TagManager;
 import tw.medfirst.com.project.manager.UpdateManager;
 import tw.medfirst.com.project.runnable.DownloadRunnable;
 
