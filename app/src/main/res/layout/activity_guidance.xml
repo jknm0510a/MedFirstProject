@@ -6,10 +6,13 @@
     android:orientation="vertical"
     android:clickable="false">
 
-    <tw.medfirst.com.project.baseview.ExoPlayerView
+    <!--tw.medfirst.com.project.baseview.ExoPlayerView
         android:id="@+id/surface_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center" /-->
+    <include layout="@layout/exoplayer_viewpager_item"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 </RelativeLayout>

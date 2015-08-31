@@ -35,7 +35,7 @@ public class ExoPlayerView extends VideoSurfaceView implements SurfaceHolder.Cal
     private List<String> playList;
     private int videoCount;
     private int index;
-    private String prefix;
+//    private String prefix;
 
     public ExoPlayerView(Context context) {
         super(context);
@@ -53,7 +53,7 @@ public class ExoPlayerView extends VideoSurfaceView implements SurfaceHolder.Cal
 
     private void init() {
         getHolder().addCallback(this);
-        prefix = Environment.getExternalStorageDirectory().getPath();
+//        prefix = Environment.getExternalStorageDirectory().getPath() + ;
         index = 0;
         videoCount = 0;
 //        playList = new ArrayList<String>();
@@ -65,7 +65,7 @@ public class ExoPlayerView extends VideoSurfaceView implements SurfaceHolder.Cal
             return;
 
         String userAgent = Util.getUserAgent(mContext, "ExoPlayerDemo");
-        contentUri = Uri.parse(prefix + playList.get(index));
+        contentUri = Uri.parse(playList.get(index));
         Logger.e("PlayWhenReady", contentUri);
         if(player == null){
             player = new DemoPlayer(new ExtractorRendererBuilder(mContext, userAgent, contentUri, null,

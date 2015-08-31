@@ -59,6 +59,7 @@ public class DBOperation {
         topMenuDao.printAllData();
         subMenuDao.printAllData();
         productMenuDao.printAllData();
+
     }
 
     public void setProductPageMenuDB(List<Object> tops, Handler handler){

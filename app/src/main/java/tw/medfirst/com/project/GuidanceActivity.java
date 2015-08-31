@@ -49,8 +49,8 @@ public class GuidanceActivity extends BaseActivity{
 
     @Override
     protected void processLoading() {
-        videoList.add("/test/04.mp4");
-        videoList.add("/test/03-0414_1.mp4");
+        videoList.add(Application.VEDIO_PATH + "/635724721531434309.mp4");
+        videoList.add(Application.VEDIO_PATH + "/635726599845794411.mp4");
         surfaceView.addPlayList(videoList);
         if(surfaceView != null)
             surfaceView.preparePlayer();

@@ -6,5 +6,12 @@
 
     <string name="icon_scan">商品掃描</string>
 
+    <!-- Download Dialog -->
+    <string name="download_title">軟體版本更新</string>
+    <string name="download_message">下載更新版本</string>
+    <string name="download_enter">下載</string>
+    <string name="download_cancel">取消</string>
+
+
 
 </resources>

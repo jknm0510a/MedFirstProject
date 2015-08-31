@@ -53,6 +53,11 @@
             android:name="tw.medfirst.com.project.HistoryActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="tw.medfirst.com.project.ProductActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
 
         </activity>
     </application>

@@ -26,7 +26,7 @@ public abstract class BaseActivity extends Activity{
     protected int layoutID = -1;
     protected ViewGroup root;
     protected static int guidanceTimer = 0;
-    protected final static int MAX_WAITTING = 60;
+    protected final static int MAX_WAITTING = 30;
     protected boolean runSwitch = false;
 
     @Override
@@ -74,7 +74,7 @@ public abstract class BaseActivity extends Activity{
         if(mHandler != null) {
             runSwitch = true;
             guidanceTimer = 0;
-            mHandler.post(guidanceRunnable);
+//            mHandler.post(guidanceRunnable);
         }
         super.onResume();
     }

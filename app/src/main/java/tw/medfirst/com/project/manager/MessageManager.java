@@ -6,6 +6,10 @@ package tw.medfirst.com.project.manager;
 public class MessageManager {
 
     public static final int PROCESS_LOADING = 1;
+    public static final int DOWNLOAD_COMPLETE = 2;
+    public static final int UPDATE_DOWNLOAD_PROGRESS = 3;
+
+    public static final int DOWNLOAD_ERROR = -2;
 
     public static final int PRODUCT_MENU_LOADING_ACCESS = 101;
     public static final int PRODUCT_INFO_LOADING_ACCESS = 102;

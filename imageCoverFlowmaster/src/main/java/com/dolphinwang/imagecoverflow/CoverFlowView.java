@@ -229,7 +229,6 @@ public class CoverFlowView<T extends CoverFlowAdapter> extends View {
         mTouchRect = new RectF();
 
         mTouchRect2 = new ArrayList<RectF>();
-        Log.e("hjkghjh", Integer.toString((-1)%5));
         for(int i = 0; i < 5 ; i++) {
             RectF a = new RectF();
             mTouchRect2.add(a);
@@ -575,8 +574,8 @@ public class CoverFlowView<T extends CoverFlowAdapter> extends View {
         mTouchRect2.get(getActuallyPosition(position)).top = values[5];
         mTouchRect2.get(getActuallyPosition(position)).right = mTouchRect2.get(getActuallyPosition(position)).left + child.getWidth() * values[0];
         mTouchRect2.get(getActuallyPosition(position)).bottom = mTouchRect2.get(getActuallyPosition(position)).top + child.getHeight() * values[0];
-//        Log.e("offset: " + Integer.toString(getActuallyPosition(position)), "Left: " + Float.toString(mTouchRect2[getActuallyPosition(position)].left) + ", Top: " + Float.toString(mTouchRect2[getActuallyPosition(position)].top) +
-//                                                        ", Right: " + Float.toString(mTouchRect2[getActuallyPosition(position)].right) + ", Bottom: " + Float.toString(mTouchRect2[getActuallyPosition(position)].bottom));
+//        Log.e("offset: " + Integer.toString(getActuallyPosition(position)), "Left: " + Float.toString(mTouchRect2.get(getActuallyPosition(position)).left) + ", Top: " + Float.toString(mTouchRect2.get(getActuallyPosition(position)).top) +
+//                                                        ", Right: " + Float.toString(mTouchRect2.get(getActuallyPosition(position)).right) + ", Bottom: " + Float.toString(mTouchRect2.get(getActuallyPosition(position)).bottom));
         mReflectionTransfromer.preTranslate(0, -(childTotalHeight >> 1));
         mReflectionTransfromer.postScale(childHeightScale, childHeightScale);
         mReflectionTransfromer.postTranslate(translateX, mReflectionTranslateY
@@ -651,7 +650,7 @@ public class CoverFlowView<T extends CoverFlowAdapter> extends View {
         if (getParent() != null) {
             getParent().requestDisallowInterceptTouchEvent(true);
         }
-
+//        Log.e("Ontttt", "SFSGDFGDF");
         int action = event.getAction();
         switch (action) {
         case MotionEvent.ACTION_DOWN:
@@ -663,14 +662,14 @@ public class CoverFlowView<T extends CoverFlowAdapter> extends View {
             stopLongClick();
             triggleLongClick(event.getX(), event.getY());
             touchBegan(event);
-            return false;
+            return true;
         case MotionEvent.ACTION_MOVE:
             touchMoved(event);
-            return false;
+            return true;
         case MotionEvent.ACTION_UP:
             touchEnded(event);
             stopLongClick();
-            return false;
+            return true;
         }
 
         return false;

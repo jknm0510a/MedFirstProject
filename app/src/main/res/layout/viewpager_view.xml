@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info_root_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:visibility="gone"
+    android:background="#C8000000">
+    <tw.medfirst.com.project.baseview.NLViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="1696px"
+        android:layout_height="954px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:layout_alignRight="@+id/viewpager"
+        android:layout_alignTop="@+id/viewpager"
+        android:onClick="onCancelClick"/>
+    <ImageButton
+        android:id="@+id/btn_pre_page"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:onClick="onTurnPageClick"
+        android:layout_centerVertical="true"/>
+    <ImageButton
+        android:id="@+id/btn_next_page"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:onClick="onTurnPageClick"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+    <tw.medfirst.com.project.baseview.ViewPagerIndicator
+        android:id="@+id/indicator"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="15dip"/>
+
+
+</RelativeLayout>

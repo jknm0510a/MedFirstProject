@@ -11,6 +11,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -51,10 +52,10 @@ public class LoadingActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         layoutID = R.layout.activity_loading;
         super.onCreate(savedInstanceState);
-//        UpdateManager mUpdateManager = new UpdateManager(this);
-//        mUpdateManager.checkUpdateInfo();
-        downloadList = new ArrayList<DownloadEntity>();
-        HttpManager.getInstance().getProductMenuRunnableFromHttp(this, mHandler, "121212", "1.1.1.1");
+        UpdateManager mUpdateManager = new UpdateManager(this, mHandler, "http://softfile.3g.qq.com:8080/msoft/179/24659/43549/qq_hd_mini_1.4.apk", "DDDDD.apk");
+        mUpdateManager.checkUpdateInfo();
+//        downloadList = new ArrayList<DownloadEntity>();
+//        HttpManager.getInstance().getProductMenuRunnableFromHttp(this, mHandler, "121212", "1.1.1.1");
 //        HttpManager.getInstance().getGudanceInfoRunnableFromHttp(this, mHandler, "121212", "1.1.1.1");
 //        testThread();
 
@@ -70,7 +71,7 @@ public class LoadingActivity extends BaseActivity{
                 List<Object> menuData = (List<Object>) msg.obj;
 //                Logger.e(TAG, data.toString());
                 DBOperation.getcInstance(this).setProductPageMenuDB(menuData, mHandler);
-//                DBOperation.getcInstance(this).printAllProductMenu();
+                DBOperation.getcInstance(this).printAllProductMenu();
                 break;
             case MessageManager.PRODUCT_MENU_ADDING_ACCESS:
                 AddDownloadList(msg.obj);
@@ -91,12 +92,10 @@ public class LoadingActivity extends BaseActivity{
             case MessageManager.PRODUCT_INFO_ADDING_ACCESS:
                 AddDownloadList(msg.obj);
                 HttpManager.getInstance().getGudanceInfoRunnableFromHttp(this, mHandler, "121212", "1.1.1.1");
-
                 break;
             case MessageManager.GUDANCE_INFO_LOADING_ACCESS:
                 List<Object> gudanceDatas = (List<Object>) msg.obj;
                 DBOperation.getcInstance(this).setGudanceInfo2DB(gudanceDatas, mHandler);
-
                 break;
             case MessageManager.GUDANCE_INFO_ADDING_ACCESS:
                 AddDownloadList(msg.obj);
@@ -135,7 +134,7 @@ public class LoadingActivity extends BaseActivity{
                 //check is exist????
 //            String path = Application.videoPath + downloadList.get(i).getName();
 //            if (!Application.checkIsFileExist(path))
-                fixedThreadPool.execute(new DownloadRunnable(downloadList.get(i), i));
+                fixedThreadPool.execute(new DownloadRunnable(mHandler, downloadList.get(i), i));
 //            else
 //                Logger.e(TAG, "index " + i + " " + downloadList.get(i).getName() + " is exist");
         }
@@ -159,6 +158,9 @@ public class LoadingActivity extends BaseActivity{
         runSwitch = false;
     }
 
+    public void onNextClick(View view){
+        startActivity(MainActivity.class);
+    }
 
 
 }

@@ -26,6 +26,9 @@ import tw.medfirst.com.project.manager.MessageManager;
 
 public class MainActivity extends BaseActivity{
     private final static String TAG = "MainActivity";
+    private final static int PRODUCT_ACTIVITY = 2;
+    private final static int HISTORY_ACTIVITY = 3;
+
     private int template;
     private TextView tv_name;
     private ViewGroup notificationView;
@@ -36,7 +39,7 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         template = 1;
         switch(template) {
-            case 1:             //����1
+            case 1:
                 layoutID = R.layout.activity_main_template_1;
                 super.onCreate(savedInstanceState);
 //                init();
@@ -45,7 +48,14 @@ public class MainActivity extends BaseActivity{
         }
         gcmRegistrationAsyncTask = new GcmRegistrationAsyncTask(this);
         gcmRegistrationAsyncTask.execute();
-        Application.sendMessage(mHandler, MessageManager.PROCESS_LOADING, 0, 0, null);
+//        Application.sendMessage(mHandler, MessageManager.PROCESS_LOADING, 0, 0, null);
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(9999);
+            }
+        }, 7000);
 
     }
 
@@ -67,14 +77,14 @@ public class MainActivity extends BaseActivity{
 //        mCoverFlowView.enableReflectionShader(true);
         mCoverFlowView.setVisibleImage(5);
         ViewGroup view = (ViewGroup) mCoverFlowView.getParent();
-        view.setBackgroundDrawable(new BitmapDrawable(getBitmapFromRes(this, R.drawable.home_bg)));
+        view.setBackgroundDrawable(new BitmapDrawable(getResources(), Application.getBitmapFromRes(this, R.drawable.home_bg)));
 
         ArrayList<Bitmap> mData = new ArrayList<Bitmap>();
-        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.scan_code_icon));
-        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.onsale_icon));
-        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.product_icon));
-        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.health_info_icon));
-        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.membership_icon));
+        mData.add(Application.getBitmapFromRes(this, R.drawable.scan_code_icon));
+        mData.add(Application.getBitmapFromRes(this, R.drawable.onsale_icon));
+        mData.add(Application.getBitmapFromRes(this, R.drawable.product_icon));
+        mData.add(Application.getBitmapFromRes(this, R.drawable.health_info_icon));
+        mData.add(Application.getBitmapFromRes(this, R.drawable.membership_icon));
 //        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.a_2));
 //        mData.add(BitmapFactory.decodeResource(this.getResources(), R.drawable.a_1));
         CoverFlowAdapter2 adapter = new CoverFlowAdapter2(mHandler);
@@ -91,10 +101,19 @@ public class MainActivity extends BaseActivity{
 
             @Override
             public void topImageClicked(CoverFlowView<CoverFlowAdapter2> coverFlowView, int position) {
-                Logger.e("topImageClicked", position);
+//                Logger.e("topImageClicked", position);
+                switch (position){
+                    case PRODUCT_ACTIVITY:
+                        startActivity(ProductActivity.class);
+                        break;
+                    case HISTORY_ACTIVITY:
+                        startActivity(HistoryActivity.class);
+                        break;
+
+                }
 //                notificationView.setAnimation();
-                notificationView.setVisibility(View.VISIBLE);
-                notificationView.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.grow_from_bottom));
+//                notificationView.setVisibility(View.VISIBLE);
+//                notificationView.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.grow_from_bottom));
 
             }
 
@@ -104,32 +123,26 @@ public class MainActivity extends BaseActivity{
             }
         });
 
-//        mCoverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
-//        mCoverFlowTitle = (TextSwitcher) findViewById(R.id.title);
-//
-//        coverFlowEntityList = new ArrayList<CoverFlowEntity>();
-//        mCoverFlowAdapter = new CoverFlowAdapter(this);
-//
-//        mCoverFlowTitle.setFactory(new ViewSwitcher.ViewFactory() {
-//            @Override
-//            public View makeView() {
-//                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-//                TextView textView = (TextView) inflater.inflate(R.layout.item_coverflow_title, null);
-//                return textView;
-//            }
-//        });
-//        Animation in = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
-//        Animation out = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
-//        mCoverFlowTitle.setInAnimation(in);
-//        mCoverFlowTitle.setOutAnimation(out);
-//        mCoverFlow.setOnItemClickListener(this);
-//        mCoverFlow.setOnScrollPositionListener(this);
-
     }
 
     @Override
     protected void processMessage(Message msg) {
-
+        switch (msg.what){
+            case 9999:
+                notificationView.setVisibility(View.VISIBLE);
+                notificationView.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.grow_from_bottom));
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHandler.sendEmptyMessage(9998);
+                    }
+                }, 7000);
+                break;
+            case 9998:
+                notificationView.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.grow_from_top));
+                notificationView.setVisibility(View.GONE);
+                break;
+        }
     }
 
     @Override
@@ -140,23 +153,7 @@ public class MainActivity extends BaseActivity{
         HttpManager.getInstance().getLayoutInfoRunnableFromHttp(this, null, "123", "1.1.1.1");
     }
 
-    private static Bitmap getBitmapFromRes(Context context, int resId){
-        try{
-            BitmapFactory.Options opt = new BitmapFactory.Options();
-            opt.inPreferredConfig = Bitmap.Config.RGB_565;
-            opt.inPurgeable = true;
-            opt.inInputShareable = true;
 
-            InputStream is = context.getResources().openRawResource(resId);
-            return BitmapFactory.decodeStream(is, null, opt);
-//            Bitmap bitmap = BitmapFactory.decodeFile(sd + "/" + file);
-//            return bitmap;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     protected void onDestroy() {
