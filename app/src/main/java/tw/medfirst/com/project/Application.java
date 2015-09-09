@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -31,7 +34,7 @@ public class Application extends MultiDexApplication {
     public final static String APK_PATH = FILE_ROOT + "/apk/";
     public static int screen_width;
     public static int screen_height;
-
+    public static RectF rect;
 
     @Override
     public void onCreate() {
@@ -127,9 +130,14 @@ public class Application extends MultiDexApplication {
             opt.inInputShareable = true;
 
             InputStream is = context.getResources().openRawResource(resId);
-            return BitmapFactory.decodeStream(is, null, opt);
+            Bitmap bitmap = BitmapFactory.decodeStream(is, null, opt);
+            Matrix matrix = new Matrix();
+
+//            matrix.setRotate(30);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 //            Bitmap bitmap = BitmapFactory.decodeFile(sd + "/" + file);
 //            return bitmap;
+//            return BitmapFactory.decodeStream(is, null, opt);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -151,6 +159,7 @@ public class Application extends MultiDexApplication {
             if(file.exists()){
                 fileInputStream = new FileInputStream(file);
             }
+
             return BitmapFactory.decodeStream(fileInputStream, null, opt);
         }
         catch (Exception e){
