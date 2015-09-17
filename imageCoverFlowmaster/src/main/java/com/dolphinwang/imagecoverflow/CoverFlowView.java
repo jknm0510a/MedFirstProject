@@ -17,6 +17,7 @@ package com.dolphinwang.imagecoverflow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -480,7 +481,6 @@ public class CoverFlowView<T extends CoverFlowAdapter> extends View {
             makeChildTransfromer(child, position, offset);
             canvas.drawBitmap(child, mChildTransfromer, mDrawChildPaint);
             if (reflection != null) {
-
                 canvas.drawBitmap(reflection, mReflectionTransfromer,
                         mDrawChildPaint);
             }

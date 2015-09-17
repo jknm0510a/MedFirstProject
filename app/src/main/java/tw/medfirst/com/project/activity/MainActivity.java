@@ -7,19 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.dolphinwang.imagecoverflow.CoverFlowView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tw.medfirst.com.project.Application;
 import tw.medfirst.com.project.R;
-import tw.medfirst.com.project.adapter.CoverFlowAdapter2;
-import tw.medfirst.com.project.baseunit.Logger;
+import tw.medfirst.com.project.adapter.CustomCoverFlowAdapter;
 import tw.medfirst.com.project.baseview.BaseActivity;
 //import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
+import tw.medfirst.com.project.baseview.CoverFlowView;
 import tw.medfirst.com.project.baseview.PhotoStyleImageView;
 import tw.medfirst.com.project.gcm.GcmRegistrationAsyncTask;
 import tw.medfirst.com.project.manager.HttpManager;
@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     private int template;
-    private TextView tv_name;
+//    private TextView tv_name;
     private ViewGroup notificationView;
     private String[] iconName;
     protected GcmRegistrationAsyncTask gcmRegistrationAsyncTask;
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        template = 1;
+        template = 2;
         switch(template) {
             case 1:
                 layoutID = R.layout.activity_main_template_1;
@@ -130,40 +130,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void init() {
-        tv_name = (TextView)findViewById(R.id.tv_name);
+//        tv_name = (TextView)findViewById(R.id.tv_name);
         iconName = getResources().getStringArray(R.array.icon_name);
         notificationView = (ViewGroup) findViewById(R.id.notification_view);
+        if(root != null)
+            root.setBackground(new BitmapDrawable(getResources(), Application.getBitmapFromRes(this, R.mipmap.main_t2_background)));
+
+    }
+
+    @Override
+    protected void initIndex() {
+        pageIndex = MAIN_PAGE;
     }
 
     private void initTemplate1() {
-        CoverFlowView<CoverFlowAdapter2> mCoverFlowView=(CoverFlowView<CoverFlowAdapter2>)findViewById(R.id.coverflow);
+        CoverFlowView<CustomCoverFlowAdapter> mCoverFlowView=(CoverFlowView<CustomCoverFlowAdapter>)findViewById(R.id.coverflow);
         mCoverFlowView.setCoverFlowGravity(CoverFlowView.CoverFlowGravity.CENTER_VERTICAL);
         mCoverFlowView.setCoverFlowLayoutMode(CoverFlowView.CoverFlowLayoutMode.WRAP_CONTENT);
 
         mCoverFlowView.setVisibleImage(5);
-        ViewGroup view = (ViewGroup) mCoverFlowView.getParent();
-        view.setBackgroundDrawable(new BitmapDrawable(getResources(), Application.getBitmapFromRes(this, R.drawable.home_bg)));
+//        ViewGroup view = (ViewGroup) mCoverFlowView.getParent();
+//        view.setBackgroundDrawable(new BitmapDrawable(getResources(), Application.getBitmapFromRes(this, R.drawable.home_bg)));
 
         ArrayList<Bitmap> mData = new ArrayList<Bitmap>();
-        mData.add(Application.getBitmapFromRes(this, R.drawable.scan_code_icon));
-        mData.add(Application.getBitmapFromRes(this, R.drawable.onsale_icon));
-        mData.add(Application.getBitmapFromRes(this, R.drawable.product_icon));
-        mData.add(Application.getBitmapFromRes(this, R.drawable.health_info_icon));
-        mData.add(Application.getBitmapFromRes(this, R.drawable.membership_icon));
-        CoverFlowAdapter2 adapter = new CoverFlowAdapter2(mHandler);
+        mData.add(Application.getBitmapFromRes(this, R.mipmap.scan_code_icon));
+        mData.add(Application.getBitmapFromRes(this, R.mipmap.onsale_icon));
+        mData.add(Application.getBitmapFromRes(this, R.mipmap.product_icon));
+        mData.add(Application.getBitmapFromRes(this, R.mipmap.health_info_icon));
+        mData.add(Application.getBitmapFromRes(this, R.mipmap.membership_icon));
+        CustomCoverFlowAdapter adapter = new CustomCoverFlowAdapter(mHandler);
 
         adapter.setData(mData);
         mCoverFlowView.setAdapter(adapter);
-        mCoverFlowView.setCoverFlowListener(new CoverFlowView.CoverFlowListener<CoverFlowAdapter2>() {
+        mCoverFlowView.setCoverFlowListener(new CoverFlowView.CoverFlowListener<CustomCoverFlowAdapter>() {
 
             @Override
-            public void imageOnTop(CoverFlowView<CoverFlowAdapter2> coverFlowView, int position, float left, float top, float right, float bottom) {
+            public void imageOnTop(CoverFlowView<CustomCoverFlowAdapter> coverFlowView, int position, float left, float top, float right, float bottom) {
 //                Logger.e("imageOnTop", position);
-                tv_name.setText(iconName[position]);
+//                tv_name.setText(iconName[position]);
             }
 
             @Override
-            public void topImageClicked(CoverFlowView<CoverFlowAdapter2> coverFlowView, int position) {
+            public void topImageClicked(CoverFlowView<CustomCoverFlowAdapter> coverFlowView, int position) {
                 coverFlowView.setTag(position);
                 onIconClick(coverFlowView);
             }
@@ -181,10 +189,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if(v != null){
             switch (position){
                 case PRODUCT_ACTIVITY:
-                    startActivity(ProductActivity.class);
+                    startActivity(ProductActivity.class, position);
                     break;
                 case HISTORY_ACTIVITY:
-                    startActivity(HistoryActivity.class);
+                    startActivity(HistoryActivity.class, position);
                     break;
 
             }

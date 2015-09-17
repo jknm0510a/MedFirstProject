@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_below="@+id/action_bar_root"
+    android:orientation="vertical"
+    android:paddingTop="50px"
+    android:paddingLeft="410px"
+    android:layout_alignParentLeft="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CustomScrollBar">
+        <tw.medfirst.com.project.baseview.ProductListLinearLayout
+            android:id="@+id/product_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </HorizontalScrollView>
+
+</LinearLayout>

@@ -137,13 +137,18 @@ public class LoadingActivity extends BaseActivity{
     }
 
     @Override
+    protected void initIndex() {
+        pageIndex = LOADING_PAGE;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         runSwitch = false;
     }
 
     public void onNextClick(View view){
-        startActivity(MainActivity.class);
+        startActivity(MainActivity.class, 0);
     }
 
 

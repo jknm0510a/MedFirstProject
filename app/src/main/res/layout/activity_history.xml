@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="#ff8ce0e0">
+    <include layout="@layout/action_bar_view"/>
     <tw.medfirst.com.project.baseview.HistoryWall
         android:id="@+id/wall"
         android:layout_marginTop="300px"

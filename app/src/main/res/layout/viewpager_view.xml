@@ -19,7 +19,7 @@
         android:text="New Button"
         android:layout_alignRight="@+id/viewpager"
         android:layout_alignTop="@+id/viewpager"
-        android:onClick="onCancelClick"/>
+        android:onClick="onViewPagerCancelClick"/>
     <ImageButton
         android:id="@+id/btn_pre_page"
         android:layout_width="100dip"

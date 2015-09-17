@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by KCTsai on 2015/8/10.
  */
-public class HistoryAdapter extends com.dolphinwang.imagecoverflow.CoverFlowAdapter{
+public class HistoryAdapter extends BaseCoverFlowAdapter{
     protected ArrayList<Bitmap> mData;
     protected Handler mHandler;
 

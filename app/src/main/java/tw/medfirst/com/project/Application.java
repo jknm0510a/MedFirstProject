@@ -48,8 +48,8 @@ public class Application extends MultiDexApplication {
         createFileIfNeed(APK_PATH);
         screen_height = getResources().getDisplayMetrics().heightPixels;
         screen_width  = getResources().getDisplayMetrics().widthPixels;
-        float d = getResources().getDisplayMetrics().density;
-//        Logger.e("APP:::", d + ", " + screen_height + ", " + screen_width);
+        float d = getResources().getDisplayMetrics().densityDpi;
+        Logger.e("APP:::", d + ", " + screen_height + ", " + screen_width);
     }
 
     @Override
@@ -93,6 +93,8 @@ public class Application extends MultiDexApplication {
 
 
     public static boolean checkIsFileExist(final String path){
+        if(path == null)
+            return false;
         File file = new File(path);
         if(file.exists())
             return true;

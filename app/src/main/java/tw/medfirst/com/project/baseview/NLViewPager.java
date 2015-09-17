@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import java.lang.reflect.Field;
 
+import tw.medfirst.com.project.activity.DetailInfoActivity;
 import tw.medfirst.com.project.activity.ProductActivity;
 import tw.medfirst.com.project.adapter.ViewPagerAdapter;
 import tw.medfirst.com.project.baseunit.FixedSpeedScroller;
@@ -15,7 +16,7 @@ import tw.medfirst.com.project.baseunit.Logger;
 /**
  * Created by KCTsai on 2015/7/9.
  */
-public class NLViewPager extends ViewPager implements ProductActivity.OnActivityStateChangeListener {
+public class NLViewPager extends ViewPager implements DetailInfoActivity.OnActivityStateChangeListener {
     protected int childCount;
     protected ViewPagerIndicator indicator;
     protected ViewPagerAdapter mAdapter;
@@ -111,7 +112,7 @@ public class NLViewPager extends ViewPager implements ProductActivity.OnActivity
     }
 
 
-    public ProductActivity.OnActivityStateChangeListener getActivityStateChangeListener() {
+    public DetailInfoActivity.OnActivityStateChangeListener getActivityStateChangeListener() {
         return this;
     }
 

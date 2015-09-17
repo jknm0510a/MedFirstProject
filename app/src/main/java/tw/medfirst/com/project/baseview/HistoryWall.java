@@ -26,8 +26,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.dolphinwang.imagecoverflow.BitmapUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

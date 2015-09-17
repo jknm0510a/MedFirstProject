@@ -28,6 +28,7 @@ public class GuidanceActivity extends BaseActivity{
         layoutID = R.layout.activity_guidance;
         super.onCreate(savedInstanceState);
         Application.sendMessage(mHandler, MessageManager.PROCESS_LOADING, 0, 0, null);
+        pageIndex = LOADING_PAGE;
     }
 
     @Override
@@ -60,6 +61,11 @@ public class GuidanceActivity extends BaseActivity{
     }
 
     @Override
+    protected void initIndex() {
+        pageIndex = GUIDANCE_PAGE;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
@@ -75,7 +81,7 @@ public class GuidanceActivity extends BaseActivity{
         int action = event.getAction();
         if(action == MotionEvent.ACTION_UP){
 //            Logger.e(TAG, "MotionEvent.ACTION_UP");
-            startActivity(MainActivity.class);
+            startActivity(MainActivity.class, MAIN_PAGE);
         }
         return super.onTouchEvent(event);
     }

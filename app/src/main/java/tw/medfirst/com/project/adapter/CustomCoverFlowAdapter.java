@@ -8,11 +8,11 @@ import java.util.ArrayList;
 /**
  * Created by KCTsai on 2015/6/18.
  */
-public class CoverFlowAdapter2 extends com.dolphinwang.imagecoverflow.CoverFlowAdapter{
+public class CustomCoverFlowAdapter extends BaseCoverFlowAdapter{
     protected ArrayList<Bitmap> mData;
     protected Handler mHandler;
 
-    public CoverFlowAdapter2(Handler mHandler) {
+    public CustomCoverFlowAdapter(Handler mHandler) {
         this.mHandler = mHandler;
     }
 

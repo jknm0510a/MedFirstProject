@@ -21,4 +21,14 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
+
+    <style name="CustomScrollBar">
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbars">horizontal</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarAlwaysDrawHorizontalTrack">false</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar_thumb_shape</item>
+        <item name="android:scrollbarTrackHorizontal">@drawable/scrollbar_track_shape</item>
+    </style>
 </resources>
